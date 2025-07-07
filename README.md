@@ -9,6 +9,7 @@
 This Python application integrates the Nessus vulnerability scanner with the Netbox network infrastructure management system, enabling automated inventory synchronization, comparison, and reporting.
 
 ## Features
+![image](https://github.com/user-attachments/assets/47493449-4b95-429d-9c03-5a444b03930d)
 
 ### Nessus Integration
 - Connects and authenticates with the Nessus API
