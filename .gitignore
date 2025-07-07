@@ -1,0 +1,156 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+logs/
+*.log
+*.log.*
+
+# Output files (contain sensitive data)
+output/
+*.json
+*.html
+*.csv
+*.xml
+
+# Configuration files with sensitive data
+config/config.json
+config/*.key
+config/*.pem
+config/*.crt
+config/*.p12
+
+# API Keys and Secrets
+*.key
+*.pem
+*.crt
+*.p12
+*.pfx
+secrets.json
+.env
+.env.local
+.env.production
+.env.staging
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Backup files
+backup/
+backups/
+
+# Cache
+.cache/
+*.cache
+
+# Reports (may contain sensitive data)
+reports/
+*.report
+*.report.*
+
+# Test coverage
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# PEP 582
+__pypackages__/
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# Specific to this project
+nessus_agents.json
+netbox_devices.json
+netbox_vms.json
+comparison_*.json
+sync_results.json
+*_report_*.html
+comprehensive_*.json
+ip_search_results.json

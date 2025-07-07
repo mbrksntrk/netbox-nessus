@@ -1,0 +1,21 @@
+{
+  "nessus": {
+    "base_url": "https://your-nessus-server",
+    "access_key": "your-access-key-here",
+    "secret_key": "your-secret-key-here",
+    "verify_ssl": false
+  },
+  "netbox": {
+    "base_url": "https://your-netbox-server",
+    "token": "your-netbox-token-here",
+    "verify_ssl": false
+  },
+  "output": {
+    "file": "output/data.json",
+    "format": "json"
+  },
+  "logging": {
+    "level": "INFO",
+    "file": "logs/app.log"
+  }
+} 
