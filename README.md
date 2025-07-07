@@ -1,125 +1,143 @@
 # Netbox-Nessus Integration Tool
 
-Bu Python uygulaması, Nessus vulnerability scanner ile Netbox network infrastructure management sistemini entegre eder.
+This Python application integrates the Nessus vulnerability scanner with the Netbox network infrastructure management system, enabling automated inventory synchronization, comparison, and reporting.
 
-## Özellikler
+## Features
 
-### Nessus Entegrasyonu
-- Nessus API'sına bağlanma ve kimlik doğrulama
-- Tüm agent'ları listeleme ve detaylı bilgi çekme
-- Agent'ları durum ve platforma göre filtreleme
-- Scan sonuçlarını çekme
-- Agent istatistikleri oluşturma
+### Nessus Integration
+- Connects and authenticates with the Nessus API
+- Fetches all agents with detailed information
+- Filters agents by status and platform
+- Retrieves scan results
+- Generates agent statistics
 
-### Netbox Entegrasyonu
-- Netbox API'sına bağlanma ve kimlik doğrulama
-- Cihazları listeleme ve yönetme
-- Site ve duruma göre cihaz filtreleme
-- IP adreslerini yönetme
-- Cihaz istatistikleri oluşturma
+### Netbox Integration
+- Connects and authenticates with the Netbox API
+- Fetches, lists, and manages devices and virtual machines (VMs)
+- Filters devices by site and status
+- Retrieves all interfaces and IP addresses for devices and VMs
+- Generates device and VM statistics
 
-### Entegrasyon Özellikleri
-- Nessus agent'larını Netbox cihazlarına senkronize etme
-- Otomatik cihaz oluşturma ve güncelleme
-- JSON formatında veri kaydetme
-- Modüler ve genişletilebilir yapı
+### Integration & Automation
+- Synchronizes Nessus agents as Netbox devices (auto-create/update)
+- Compares Nessus agents with Netbox devices and VMs (hostname/IP matching)
+- Generates comprehensive comparison reports (JSON & HTML)
+- Searches both systems by IP address
+- Modular, extensible, and interactive CLI
 
-## Proje Yapısı
+### Reporting
+- Saves all fetched and comparison data in JSON format
+- Generates detailed HTML reports for devices, VMs, and comparison results
+- Output files are stored in the `output/` directory
+
+### Security & Best Practices
+- Sensitive data (JSON, HTML, logs, etc.) is excluded from version control via `.gitignore`
+- Real credentials and sensitive output files should never be committed to git
+
+## Project Structure
 
 ```
 netbox-nessus/
-├── api/                    # API Client'ları
+├── api/                    # API clients
 │   ├── __init__.py
-│   ├── base_client.py      # Temel API client sınıfı
+│   ├── base_client.py      # Base API client class
 │   ├── nessus_client.py    # Nessus API client
 │   └── netbox_client.py    # Netbox API client
-├── config/                 # Konfigürasyon
+├── config/                 # Configuration
 │   ├── __init__.py
-│   ├── settings.py         # Konfigürasyon yönetimi
-│   └── config.json.example # Örnek konfigürasyon
-├── services/               # İş mantığı katmanı
+│   ├── settings.py         # Configuration management
+│   └── config.json.example # Example configuration
+├── services/               # Business logic layer
 │   ├── __init__.py
-│   ├── nessus_service.py   # Nessus işlemleri
-│   └── netbox_service.py   # Netbox işlemleri
-├── utils/                  # Yardımcı fonksiyonlar
+│   ├── comparison_service.py # Comparison logic
+│   ├── nessus_service.py   # Nessus operations
+│   └── netbox_service.py   # Netbox operations
+├── utils/                  # Utility functions
 │   ├── __init__.py
-│   └── helpers.py          # Ortak yardımcı fonksiyonlar
-├── models/                 # Veri modelleri
+│   ├── config_loader.py    # Config loader
+│   ├── helpers.py          # Common helpers
+│   └── html_reporter.py    # HTML report generation
+├── models/                 # Data models
 │   └── __init__.py
-├── output/                 # Çıktı dosyaları
-├── logs/                   # Log dosyaları
-├── main.py                 # Ana uygulama
-├── main_old.py             # Eski main dosyası (yedek)
-├── requirements.txt        # Python bağımlılıkları
-└── README.md              # Bu dosya
+├── output/                 # Output files (JSON, HTML, etc.)
+├── logs/                   # Log files
+├── main.py                 # Main application
+├── requirements.txt        # Python dependencies
+└── README.md               # This file
 ```
 
-## Kurulum
+## Installation
 
-1. **Virtual Environment Oluşturun:**
-```bash
-python -m venv venv
-```
+1. **Create a virtual environment:**
+   ```bash
+   python -m venv venv
+   ```
 
-2. **Virtual Environment'ı Aktifleştirin:**
-```bash
-# Windows PowerShell
-.\venv\Scripts\Activate.ps1
+2. **Activate the virtual environment:**
+   ```bash
+   # Windows PowerShell
+   .\venv\Scripts\Activate.ps1
 
-# Linux/Mac
-source venv/bin/activate
-```
+   # Linux/Mac
+   source venv/bin/activate
+   ```
 
-3. **Gerekli Paketleri Yükleyin:**
-```bash
-pip install -r requirements.txt
-```
+3. **Install dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-4. **Konfigürasyon Dosyasını Oluşturun:**
-```bash
-cp config/config.json.example config/config.json
-```
+4. **Create your configuration file:**
+   ```bash
+   cp config/config.json.example config/config.json
+   ```
 
-5. **Konfigürasyon Dosyasını Düzenleyin:**
-```json
-{
-  "nessus": {
-    "base_url": "https://your-nessus-server:8834",
-    "access_key": "your-access-key",
-    "secret_key": "your-secret-key",
-    "verify_ssl": false
-  },
-  "netbox": {
-    "base_url": "https://your-netbox-server",
-    "token": "your-netbox-token",
-    "verify_ssl": false
-  },
-  "output": {
-    "file": "output/data.json",
-    "format": "json"
-  },
-  "logging": {
-    "level": "INFO",
-    "file": "logs/app.log"
-  }
-}
-```
+5. **Edit `config/config.json` with your credentials:**
+   ```json
+   {
+     "nessus": {
+       "base_url": "https://your-nessus-server:8834",
+       "access_key": "your-access-key",
+       "secret_key": "your-secret-key",
+       "verify_ssl": false
+     },
+     "netbox": {
+       "base_url": "https://your-netbox-server",
+       "token": "your-netbox-token",
+       "verify_ssl": false
+     },
+     "output": {
+       "file": "output/data.json",
+       "format": "json"
+     },
+     "logging": {
+       "level": "INFO",
+       "file": "logs/app.log"
+     }
+   }
+   ```
 
-## Kullanım
+## Usage
 
-### Ana Uygulamayı Çalıştırma
+### Running the Main Application
+
 ```bash
 python main.py
 ```
 
-Uygulama interaktif bir menü sunar:
+The application provides an interactive menu:
 
-1. **Fetch Nessus Agents** - Nessus'tan agent'ları çeker
-2. **Fetch Netbox Devices** - Netbox'tan cihazları çeker
-3. **Sync Nessus Agents to Netbox** - Agent'ları Netbox'a senkronize eder
-4. **Exit** - Uygulamadan çıkış
+1. **Fetch Nessus Agents** – Retrieve agents from Nessus
+2. **Fetch Netbox Devices** – Retrieve devices from Netbox
+3. **Fetch Netbox Virtual Machines** – Retrieve VMs from Netbox
+4. **Compare Nessus with Netbox** – Compare agents with devices/VMs
+5. **Search by IP Address** – Search both systems by IP
+6. **Sync Nessus Agents to Netbox** – Synchronize agents as Netbox devices
+7. **Exit** – Exit the application
 
-### Environment Variables ile Kullanım
+### Using Environment Variables
+
+You can also provide credentials via environment variables:
 
 ```bash
 # Windows PowerShell
@@ -139,24 +157,25 @@ export NETBOX_TOKEN="your-netbox-token"
 python main.py
 ```
 
-## API Anahtarlarını Alma
+## Obtaining API Keys
 
-### Nessus API Anahtarları
-1. Nessus web arayüzüne giriş yapın
-2. **Settings** > **My Account** bölümüne gidin
-3. **API Keys** sekmesine tıklayın
-4. **Generate** butonuna tıklayarak yeni anahtarlar oluşturun
+### Nessus API Keys
+1. Log in to the Nessus web interface
+2. Go to **Settings** > **My Account**
+3. Click the **API Keys** tab
+4. Click **Generate** to create new keys
 
 ### Netbox API Token
-1. Netbox web arayüzüne giriş yapın
-2. **Admin** > **Users** bölümüne gidin
-3. Kullanıcınızı seçin
-4. **API Tokens** sekmesine tıklayın
-5. **Add API Token** butonuna tıklayın
+1. Log in to the Netbox web interface
+2. Go to **Admin** > **Users**
+3. Select your user
+4. Click the **API Tokens** tab
+5. Click **Add API Token**
 
-## Çıktı Formatları
+## Output Formats
 
-### Agent Verileri
+### Agent Data Example
+
 ```json
 {
   "timestamp": "2024-01-15T10:30:00.123456",
@@ -178,7 +197,8 @@ python main.py
 }
 ```
 
-### Cihaz Verileri
+### Device Data Example
+
 ```json
 {
   "timestamp": "2024-01-15T10:30:00.123456",
@@ -191,79 +211,98 @@ python main.py
       "status": {"value": "active"},
       "site": {"name": "Main Site"},
       "device_type": {"model": "Dell PowerEdge"},
-      "platform": {"name": "Windows Server 2019"}
+      "platform": {"name": "Windows Server 2019"},
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ip_addresses": ["10.0.0.1", "10.0.0.2"]
+        }
+      ]
     }
   ]
 }
 ```
 
-## Modüler Yapı Avantajları
+### Comparison Report Example
 
-### API Katmanı (`api/`)
-- **base_client.py**: Ortak HTTP işlemleri ve hata yönetimi
-- **nessus_client.py**: Nessus API'sına özel işlemler
-- **netbox_client.py**: Netbox API'sına özel işlemler
+```json
+{
+  "timestamp": "2024-01-15T10:30:00.123456",
+  "data_type": "comparison",
+  "matched": [...],
+  "unmatched_agents": [...],
+  "unmatched_devices": [...],
+  "unmatched_vms": [...],
+  "summary": {
+    "total_agents": 100,
+    "total_devices": 80,
+    "total_vms": 20,
+    "matched_with_devices": 70,
+    "matched_with_vms": 15,
+    "unmatched_agents": 15,
+    "unmatched_devices": 10,
+    "unmatched_vms": 5
+  }
+}
+```
 
-### Servis Katmanı (`services/`)
-- **nessus_service.py**: Nessus iş mantığı ve veri işleme
-- **netbox_service.py**: Netbox iş mantığı ve veri işleme
+## Advantages of Modular Design
 
-### Konfigürasyon (`config/`)
-- **settings.py**: Merkezi konfigürasyon yönetimi
-- Environment variables ve dosya desteği
-- Konfigürasyon doğrulama
+- Easy to extend with new integrations or features
+- Clear separation of API, business logic, and utilities
+- Simple configuration and deployment
 
-### Yardımcı Fonksiyonlar (`utils/`)
-- **helpers.py**: Ortak yardımcı fonksiyonlar
-- JSON dosya işlemleri
-- Veri formatlama ve filtreleme
+## Security Notice
 
-## Hata Yönetimi
+- **Sensitive data** (JSON, HTML, logs, etc.) is excluded from version control via `.gitignore`.
+- Never commit your real credentials or sensitive output files to git.
 
-Uygulama aşağıdaki durumları yönetir:
-- Bağlantı hataları
-- Kimlik doğrulama hataları
-- JSON parse hataları
-- Dosya yazma hataları
-- SSL sertifika hataları
+## Error Handling
+
+The application handles the following scenarios:
+- Connection errors
+- Authentication errors
+- JSON parse errors
+- File writing errors
+- SSL certificate errors
 - API rate limiting
 
-## Güvenlik Notları
+## Security Notes
 
-- API anahtarlarınızı güvenli tutun
-- `config/config.json` dosyasını version control'e eklemeyin
-- Production ortamında SSL doğrulamasını etkinleştirin
-- API anahtarlarını düzenli olarak yenileyin
-- Virtual environment kullanın
+- Keep your API keys secure
+- Do not include sensitive data in version control
+- Enable SSL verification in production
+- Rotate your API keys regularly
+- Use virtual environments
 
-## Geliştirme
+## Development
 
-### Yeni API Ekleme
-1. `api/` klasöründe yeni client oluşturun
-2. `BaseAPIClient`'dan inherit edin
-3. `services/` klasöründe service oluşturun
-4. `config/settings.py`'de konfigürasyon ekleyin
+### Adding a New API
+1. Create a new client in the `api/` directory
+2. Inherit from `BaseAPIClient`
+3. Create a new service in the `services/` directory
+4. Add configuration in `config/settings.py`
 
-### Yeni Özellik Ekleme
-1. İlgili service dosyasında metod ekleyin
-2. `main.py`'de menü seçeneği ekleyin
-3. Gerekirse yardımcı fonksiyonlar ekleyin
+### Adding a New Feature
+1. Add a method to the relevant service file
+2. Add a menu option in `main.py`
+3. If necessary, add helper functions
 
-## Sorun Giderme
+## Troubleshooting
 
-### Bağlantı Hataları
-- URL'leri kontrol edin
-- Firewall ayarlarını kontrol edin
-- SSL sertifika ayarlarını kontrol edin
+### Connection Errors
+- Check URLs
+- Check firewall settings
+- Check SSL certificate settings
 
-### Kimlik Doğrulama Hataları
-- API anahtarlarının doğru olduğunu kontrol edin
-- API anahtarlarının süresi dolmuş olabilir
+### Authentication Errors
+- Verify your API keys are correct
+- Your API keys may have expired
 
-### Import Hataları
-- Virtual environment'ın aktif olduğunu kontrol edin
-- Gerekli paketlerin yüklü olduğunu kontrol edin
+### Import Errors
+- Verify your virtual environment is active
+- Verify all required packages are installed
 
-## Lisans
+## License
 
-Bu proje MIT lisansı altında lisanslanmıştır. 
+This project is licensed under the MIT License. 
