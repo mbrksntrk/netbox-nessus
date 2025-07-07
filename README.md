@@ -1,5 +1,11 @@
 # Netbox-Nessus Integration Tool
 
+> **⚠️ IMPORTANT NOTICE** ⚠️
+> 
+> **This project is currently in development stage and serves as a middleware tool. It is NOT a direct plugin for Netbox or Tenable Nessus, and has no legal affiliation with either company. Use of this tool is entirely at your own risk and responsibility.**
+> 
+> **The developer(s) are not responsible for any data loss, security issues, or compliance violations that may occur from using this tool. Always test in a safe environment before deploying to production.**
+
 This Python application integrates the Nessus vulnerability scanner with the Netbox network infrastructure management system, enabling automated inventory synchronization, comparison, and reporting.
 
 ## Features
