@@ -309,6 +309,30 @@ The application handles the following scenarios:
 - Verify your virtual environment is active
 - Verify all required packages are installed
 
+## Contributing
+
+We welcome contributions! Please follow these steps:
+
+1. **Fork** the repository
+2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
+3. **Commit** your changes (`git commit -m 'Add some amazing feature'`)
+4. **Push** to the branch (`git push origin feature/amazing-feature`)
+5. **Open** a Pull Request
+
+### Development Guidelines
+
+- Follow PEP 8 style guidelines
+- Add tests for new features
+- Update documentation as needed
+- Ensure all tests pass before submitting
+
+### Reporting Issues
+
+- Use the GitHub issue tracker
+- Provide detailed error messages and logs
+- Include steps to reproduce the issue
+- Specify your environment (OS, Python version, etc.)
+
 ## License
 
 This project is licensed under the MIT License. 
